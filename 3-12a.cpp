@@ -40,5 +40,8 @@ int main()
 		
 	} while (num != 0);
 	
+	input.close();
+	output.close();
+
 	return (0);
 }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -34,12 +35,100 @@ bool	esPozo(int casilla);
 bool	esMeta(int casilla);
 
 int		tirarDadoManual();
+int		tirarDadoAuto();
 
 
 int main()
 {
-	int	casillaJugadorConDado;
-	int	dado;
+	int casillaJugadorConDado;
+	int dado;
+	int	turnos;
+	char seleccion;
+
+	srand(time(NULL));
+
+	// Colocamos al jugador que tiene el dado en la casilla 1
+	casillaJugadorConDado = 1;
+	turnos = 1;
+	while (turnos > 0)
+	{
+		cout << "Partimos de la casilla " << casillaJugadorConDado << endl;
+
+		// Lanzamiento del dado
+		/*
+		do {
+			cout << "Elige si quieres una tirada (A)leatoria o (M)anual: ";
+			cin >> seleccion;
+			if (seleccion == 'A')
+				dado = tirarDadoAuto();
+			else if (seleccion == 'M')
+				dado = tirarDadoManual();
+		} while (seleccion != 'A' || seleccion != 'M');
+		*/
+		dado = tirarDadoManual();
+		turnos--;
+
+		// Determinacion del destino
+		casillaJugadorConDado = casillaJugadorConDado + dado;
+		cout << "SALTAS A LA CASILLA " << casillaJugadorConDado << endl;
+		if (esPosada(casillaJugadorConDado))
+		{
+			cout << "HAS CAIDO EN LA POSADA." << endl;
+			turnos--;
+		}
+		else if (esPrision(casillaJugadorConDado))
+			{
+				cout << "HAS CAIDO EN LA PRISION." << endl;
+				turnos -= 2;
+			}
+		else if (esPozo(casillaJugadorConDado))
+			{
+				cout << "HAS CAIDO EN EL POZO" << endl;
+				turnos -= 3;
+			}
+		else if (esMuerte(casillaJugadorConDado))
+		{
+			cout << "MUERTE!!! VUELVES A EMPEZAR" << endl;
+			casillaJugadorConDado = siguienteMuerte();
+			cout << "HAS CAIDO EN LA MUERTE Y VUELVES A EMPEZAR. VAS A LA CASILLA: " << casillaJugadorConDado << endl;
+		}
+		else if (esLaberinto(casillaJugadorConDado)) 
+		{
+			cout << "CAES EN EL LABERINTO" << endl;
+			casillaJugadorConDado = siguienteLaberinto();
+			cout << "SALTAS A LA CASILLA " << casillaJugadorConDado << endl;
+		}
+		else if (esPuente(casillaJugadorConDado))
+		{
+			cout << "DE PUENTE A PUENTE Y TIRO PORQUE ME LLEVA LA CORRIENTE" << endl;
+			casillaJugadorConDado = siguientePuente(casillaJugadorConDado);
+			cout << "SALTAS AL PUENTE DE LA CASILLA " << casillaJugadorConDado << endl;
+			turnos++;
+		}
+		else if (esDados(casillaJugadorConDado))
+		{
+			cout << "DE DADOS A DADOS Y TIRO PORQUE ME HA TOCADO" << endl;
+			casillaJugadorConDado = siguienteDado(casillaJugadorConDado);
+			cout << "SALTAS AL SIGUIENTE DADO EN LA CASILLA: " << casillaJugadorConDado << endl;
+			turnos++;
+		}
+		else if (esOca(casillaJugadorConDado))
+		{
+			if (!esMeta(casillaJugadorConDado)) 
+			{
+				cout << "DE OCA A OCA Y TIRO PORQUE ME TOCA" << endl;
+				casillaJugadorConDado = siguienteOca(casillaJugadorConDado);
+				cout << "SALTAS A LA SIGUIENTE OCA EN LA CASILLA: " << casillaJugadorConDado << endl;
+				turnos++;
+			}
+			else
+			{
+				cout << "HAS LLEGADO A LA META" << endl;
+				return (0);
+			}
+		}
+	}																									  
+	return 0;
 }
 
 int	tirarDadoManual()
@@ -50,6 +139,11 @@ int	tirarDadoManual()
 	cin >> tirada;
 	
 	return (tirada);
+}
+
+int tirarDadoAuto()
+{
+	return ((rand() % 6) + 1);
 }
 
 //		OCA		//
