@@ -16,6 +16,9 @@ const int	CASILLA_POSADA = 19;
 const int	CASILLA_PRISION = 52;
 const int	CASILLA_POZO = 31;
 
+const int TURNOS_POSADA = 1;
+const int TURNOS_PRISION = 2;
+const int TURNOS_POZO = 3;
 
 
 bool	esOca(int casilla);
@@ -132,35 +135,35 @@ int	siguienteOca(int casilla)
 //		PUENTES		//
 bool	esPuente(int casilla)
 {
-	if (casilla == 6 || casilla == 12)
+	if (casilla == CASILLA_PUENTE_1 || casilla == CASILLA_PUENTE_2)
 		return (true);
 	return (false);
 }
 int	siguientePuente(int casilla)
 {
-	if (casilla == 6)
-		return (12);
-	return (6);
+	if (casilla == CASILLA_PUENTE_1)
+		return (CASILLA_PUENTE_2);
+	return (CASILLA_PUENTE_1);
 }
 
 //		DADOS		//
 bool	esDados(int casilla)
 {
-	if (casilla == 26 || casilla == 53)
+	if (casilla == CASILLA_DADOS_1 || casilla == CASILLA_DADOS_2)
 		return (true);
 	return (false);
 }
 int	siguienteDado(int casilla)
 {
-	if (casilla == 26)
-		return (53);
-	return (26);
+	if (casilla == CASILLA_DADOS_1)
+		return (CASILLA_DADOS_2);
+	return (CASILLA_DADOS_1);
 }
 
 //		LABERINTO		//
 bool	esLaberinto(int casilla)
 {
-	if (casilla == 42)
+	if (casilla == CASILLA_LABERINTO)
 		return (true);
 	return (false);
 }
@@ -172,7 +175,7 @@ int	siguienteLaberinto()
 //		MUERTE		//
 bool	esMuerte(int casilla)
 {
-	if (casilla == 58)
+	if (casilla == CASILLA_MUERTE)
 		return (true);
 	return (false);
 }
@@ -183,21 +186,21 @@ int	siguienteMuerte()
 
 bool	esPosada(int casilla)
 {
-	if (casilla == 19)
+	if (casilla == CASILLA_POSADA)
 		return (true);
 	return (false);
 }
 
 bool	esPrision(int casilla)
 {
-	if (casilla == 52)
+	if (casilla == CASILLA_PRISION)
 		return (true);
 	return (false);
 }
 
 bool	esPozo(int casilla)
 {
-	if (casilla == 31)
+	if (casilla == CASILLA_POZO)
 		return (true);
 	return (false);
 }
@@ -257,11 +260,11 @@ int	efectoPosicion(int	casilla)
 int	efectoTiradas(int casilla)
 {
 	if (esPosada(casilla))
-		return(-1);
+		return(-TURNOS_POSADA);
 	else if (esPrision(casilla))
-		return(-2);
+		return(-TURNOS_PRISION);
 	else if (esPozo(casilla))
-		return(-3);
+		return(-TURNOS_POZO);
 	else if (esPuente(casilla))
 		return(1);
 	else if (esDados(casilla))
