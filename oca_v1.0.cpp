@@ -3,7 +3,7 @@
 
 using namespace std;
 
-const bool	MODO_DEBUG = true;
+const bool	MODO_DEBUG = false;
 
 const int	NUM_CASILLAS = 63;
 const int	CASILLA_PUENTE_1 = 6;
@@ -67,7 +67,7 @@ int main()
 	cout << "***EMPIEZA EL JUGADOR " << jugador << "***" << endl;
 	while(!esMeta(casillaJ1) || !esMeta(casillaJ2))
 	{
-		while(numeroDeTiradas > 0)
+		while(numeroDeTiradas > 0 && !esMeta(casillaJugadorConDado))
 		{
 			cout << "Partimos de la casilla: " << casillaJugadorConDado << endl;
 
