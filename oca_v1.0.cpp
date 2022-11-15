@@ -64,7 +64,7 @@ int main()
 	cout << "***EMPIEZA EL JUGADOR " << jugador << "***" << endl;
 	while(!esMeta(casillaJ1) || !esMeta(casillaJ2))
 	{
-		while(numeroDeTiradas > 0)
+		while(numeroDeTiradas > 0 && !esMeta(casillaJugadorConDado))
 		{
 			cout << "Partimos de la casilla: " << casillaJugadorConDado << endl;
 
@@ -211,7 +211,6 @@ bool	esMeta(int casilla)
 
 int	efectoPosicion(int	casilla)
 {
-	// Determinacion del destino
 	if (esPosada(casilla))
 		cout << "HAS CAIDO EN LA POSADA." << endl;
 	else if (esPrision(casilla))
@@ -248,7 +247,7 @@ int	efectoPosicion(int	casilla)
 		else
 		{
 			cout << "HAS LLEGADO A LA META" << endl;
-			return (0);
+			return (63);
 		}
 	}
 	return (casilla);
